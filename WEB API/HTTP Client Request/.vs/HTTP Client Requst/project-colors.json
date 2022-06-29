@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "727cf39c-ae35-4c46-8455-533d38674631": {
+      "ProjectGuid": "727cf39c-ae35-4c46-8455-533d38674631",
+      "DisplayName": "HTTP Client Requset",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
