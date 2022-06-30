@@ -1,4 +1,16 @@
-﻿
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+public class ResponseObject
+{
+    public int userId { get; set; }
+
+    public int id { get; set; }
+
+    public string? title { get; set; }
+
+    public bool completed { get; set; }
+}
 class Program
 {
     static string filePath = @"C:\Users\windo\source\repos\ASP.NET\WEB API\HTTP Client Request\result.txt";
@@ -24,57 +36,38 @@ class Program
     {
         HttpClient client = new HttpClient();
 
-        HttpResponseMessage result = await client.GetAsync($"https://jsonplaceholder.typicode.com/todos/{count}");
-        result.EnsureSuccessStatusCode();
-
-        string responseBody = await result.Content.ReadAsStringAsync();
-
-        Parse(responseBody);
-    }
-
-    static void Parse(string responseBody)
-    {
-        string text = "";
-
-        for (int i = 0; i < responseBody.Length; i++)
+        try
         {
-            if (responseBody[i] == ':')
-            {
-                i = i + 2;
+            HttpResponseMessage result = await client.GetAsync($"https://jsonplaceholder.typicode.com/todos/{count}");
+            result.EnsureSuccessStatusCode();
 
-                for (int j = i; j < responseBody.Length; j++)
-                {
-                    if (j == responseBody.Length - 2)
-                    {
-                        text += "+";
+            string responseBody = await result.Content.ReadAsStringAsync();
 
-                        i = j;
-                        break;
-                    }
+            ResponseObject? resp = JsonSerializer.Deserialize<ResponseObject>(responseBody);
 
-                    if (responseBody[j] == '"')
-                        continue;
+            if (resp != null)
+                WriteToFile(resp);
 
-                    if (responseBody[j] == ',')
-                    {
-                        text += "+";
-
-                        i = j;
-                        break;
-                    }
-
-                    text += responseBody[j];
-
-                }
-
-            }
+            throw new Exception();
         }
-
-        string[] result = text.Split('+');
-
-        WriteToFile(result);
+        catch
+        {
+            throw new Exception("Couldn't get response from client");
+        }
+        finally
+        {
+            client.Dispose();
+        }
     }
 
-    static void WriteToFile(string[] result) => File.AppendAllLines(filePath, result);
+    static void WriteToFile(ResponseObject resp)
+    {
+        string[] textBody = $"{resp.userId}+{resp.id}+{resp.title}+{resp.completed}+".Split('+');
 
+       for (int i = 0; i < textBody.Length; i++)
+            Console.WriteLine(textBody[i]);
+
+        File.AppendAllLines(filePath, textBody);
+
+    }
 }
