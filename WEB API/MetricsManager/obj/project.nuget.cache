@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "NgBE/qLEmMcrF2yQWHSq8CI2IQ4dAXDbIHxPfuTtUaP1Cr54bMKopf5Yf5QVox6HNbZGXeJFDiVALZ43q6bJsw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\windo\\source\\repos\\ASP.NET\\WEB API\\MetricsManager\\MetricsManager.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\windo\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\windo\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}

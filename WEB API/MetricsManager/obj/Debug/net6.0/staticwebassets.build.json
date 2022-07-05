@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "5v9tX8kwmdDNhBgFNnqmhkdQFsBmS4dA5kVtXoitgcs=",
+  "Source": "MetricsManager",
+  "BasePath": "_content/MetricsManager",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

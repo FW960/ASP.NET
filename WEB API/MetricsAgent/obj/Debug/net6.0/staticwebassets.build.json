@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "a4//ou4BzANko00WYDeF5I1W3Ek3ut3iQJNZtyPY+qg=",
+  "Source": "MetricsAgent",
+  "BasePath": "_content/MetricsAgent",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
