@@ -10,6 +10,7 @@
         "dependencies": {
           "MetricsAgent": "1.0.0",
           "Microsoft.NET.Test.Sdk": "16.11.0",
+          "NLog": "5.0.1",
           "coverlet.collector": "3.1.0",
           "xunit": "2.4.1",
           "xunit.runner.visualstudio": "2.4.3"
@@ -395,6 +396,14 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.1.19813"
+          }
+        }
+      },
+      "NLog/5.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.1.1159"
           }
         }
       },
@@ -1139,6 +1148,7 @@
       "xunit.runner.visualstudio/2.4.3": {},
       "MetricsAgent/1.0.0": {
         "dependencies": {
+          "NLog": "5.0.1",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "runtime": {
@@ -1243,6 +1253,13 @@
       "sha512": "sha512-U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
       "path": "newtonsoft.json/9.0.1",
       "hashPath": "newtonsoft.json.9.0.1.nupkg.sha512"
+    },
+    "NLog/5.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lNErNEPzYiZtUAlgvXpSRxUIPLIDHTLA8pKxkDDV//DCqzwp98FitFemOEmJjIuPvk3GC3ytrQMXsy7P9RTPIw==",
+      "path": "nlog/5.0.1",
+      "hashPath": "nlog.5.0.1.nupkg.sha512"
     },
     "NuGet.Frameworks/5.0.0": {
       "type": "package",

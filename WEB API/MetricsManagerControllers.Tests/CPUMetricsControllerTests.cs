@@ -1,5 +1,6 @@
 using MetricsManager.Controllers.MetricsControllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace MetricsManager.Tests
 {
     public class CPUMetricsControllerTests
     {
-        CPUMetricsController cpuMetrics = new CPUMetricsController();
+        CPUMetricsController cpuMetrics = new CPUMetricsController(new NullLogger<CPUMetricsController>(), new AgentsInfoValuesHolder());
 
         [Fact]
         public void FromAgent_ReturnsOk()

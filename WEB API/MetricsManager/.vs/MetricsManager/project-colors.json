@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a836763a-bb4f-40f7-a2c8-188ad5013cc4": {
+      "ProjectGuid": "a836763a-bb4f-40f7-a2c8-188ad5013cc4",
+      "DisplayName": "MetricsManager",
+      "ColorIndex": 0
+    },
+    "971ac015-5431-4d83-9fbd-a95943dddde3": {
+      "ProjectGuid": "971ac015-5431-4d83-9fbd-a95943dddde3",
+      "DisplayName": "MetricsManager.Tests",
+      "ColorIndex": 1
+    },
+    "a9415654-2d6a-4058-ba9f-171dec5b0312": {
+      "ProjectGuid": "a9415654-2d6a-4058-ba9f-171dec5b0312",
+      "DisplayName": "MetricsAgent",
+      "ColorIndex": 2
+    },
+    "96520fac-56ca-431b-bdbe-4d7921ef6363": {
+      "ProjectGuid": "96520fac-56ca-431b-bdbe-4d7921ef6363",
+      "DisplayName": "MetricsAgent.Tests",
+      "ColorIndex": 3
+    },
+    "cfaaece7-00f7-4bda-85f9-f05a277a22d8": {
+      "ProjectGuid": "cfaaece7-00f7-4bda-85f9-f05a277a22d8",
+      "DisplayName": "MetricsAgent.Tests",
+      "ColorIndex": 4
+    },
+    "d45e0740-cdcd-407e-b956-e95a3ac87feb": {
+      "ProjectGuid": "d45e0740-cdcd-407e-b956-e95a3ac87feb",
+      "DisplayName": "Solution Items",
+      "ColorIndex": 5
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 6
+}

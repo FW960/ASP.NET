@@ -5,7 +5,7 @@ namespace MetricsAgent.Controllers
 
     [Route("metrics/cpu")]
     [ApiController]
-    public class CPUMetricsController : BaseAgentController
+    public class CPUMetricsController : IBaseAgentController
     {
         [HttpGet("api/metrics/cpu/from/{fromTime}/to/{toTime}")]
         public override IActionResult GetMetrics([FromQuery] TimeSpan fromTime, TimeSpan toTime)

@@ -25,3 +25,7 @@ C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManager\obj\Debug\net6.0\Metr
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManager\obj\Debug\net6.0\ref\MetricsManager.dll
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManager\obj\Debug\net6.0\MetricsManager.pdb
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManager\obj\Debug\net6.0\MetricsManager.genruntimeconfig.cache
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManager\bin\Debug\net6.0\nLog.config
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManager\bin\Debug\net6.0\NLog.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManager\bin\Debug\net6.0\NLog.Extensions.Logging.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManager\bin\Debug\net6.0\NLog.Web.AspNetCore.dll

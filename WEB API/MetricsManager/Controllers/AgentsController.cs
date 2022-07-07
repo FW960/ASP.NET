@@ -6,7 +6,12 @@ namespace MetricsManager.Controllers
     [ApiController]
     public class AgentsController : Controller
     {
-        AgentsInfoValuesHolder _holder;
+        private readonly AgentsInfoValuesHolder _holder;
+
+        public AgentsController(AgentsInfoValuesHolder holder)
+        {
+            _holder = holder;
+        }
 
         [HttpPost("register")]
         public IActionResult RegisterAgent([FromBody] AgentInfo agent)

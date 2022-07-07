@@ -109,3 +109,4 @@ C:\Users\windo\source\repos\ASP.NET\WEB API\AgentMetricsCollector.Tests\obj\Debu
 C:\Users\windo\source\repos\ASP.NET\WEB API\AgentMetricsCollector.Tests\obj\Debug\net6.0\ref\MetricsAgent.Tests.dll
 C:\Users\windo\source\repos\ASP.NET\WEB API\AgentMetricsCollector.Tests\obj\Debug\net6.0\MetricsAgent.Tests.pdb
 C:\Users\windo\source\repos\ASP.NET\WEB API\AgentMetricsCollector.Tests\obj\Debug\net6.0\MetricsAgent.Tests.genruntimeconfig.cache
+C:\Users\windo\source\repos\ASP.NET\WEB API\AgentMetricsCollector.Tests\bin\Debug\net6.0\NLog.dll

@@ -2,12 +2,13 @@
 using System;
 using Xunit;
 using MetricsManager.Controllers.MetricsControllers;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace MetricsManager.Tests
 {
     public class RAMMetricsTests
     {
-        RAMMetricsController ramMetrics = new RAMMetricsController();
+        RAMMetricsController ramMetrics = new RAMMetricsController(new NullLogger<RAMMetricsController>(), new AgentsInfoValuesHolder());
 
         [Fact]
         public void FromAgent_ReturnsOk()

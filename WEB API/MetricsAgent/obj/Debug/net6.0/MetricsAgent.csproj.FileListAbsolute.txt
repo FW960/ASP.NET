@@ -25,3 +25,4 @@ C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\obj\Debug\net6.0\Metric
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\obj\Debug\net6.0\ref\MetricsAgent.dll
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\obj\Debug\net6.0\MetricsAgent.pdb
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\obj\Debug\net6.0\MetricsAgent.genruntimeconfig.cache
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\NLog.dll

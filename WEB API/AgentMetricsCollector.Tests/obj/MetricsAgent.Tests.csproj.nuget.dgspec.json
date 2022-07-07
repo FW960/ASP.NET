@@ -48,6 +48,14 @@
               "target": "Package",
               "version": "[16.11.0, )"
             },
+            "NLog": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "System.Data.SQLite.Core": {
+              "target": "Package",
+              "version": "[1.0.116, )"
+            },
             "coverlet.collector": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -120,9 +128,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "NLog": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
+            },
+            "System.Data.SQLite.Core": {
+              "target": "Package",
+              "version": "[1.0.116, )"
             }
           },
           "imports": [

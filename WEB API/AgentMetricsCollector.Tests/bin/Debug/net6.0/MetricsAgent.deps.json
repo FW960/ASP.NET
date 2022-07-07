@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "MetricsAgent/1.0.0": {
         "dependencies": {
+          "NLog": "5.0.1",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "runtime": {
@@ -20,6 +21,14 @@
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
             "assemblyVersion": "1.2.3.0",
             "fileVersion": "1.2.3.0"
+          }
+        }
+      },
+      "NLog/5.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.1.1159"
           }
         }
       },
@@ -82,6 +91,13 @@
       "sha512": "sha512-Nug3rO+7Kl5/SBAadzSMAVgqDlfGjJZ0GenQrLywJ84XGKO0uRqkunz5Wyl0SDwcR71bAATXvSdbdzPrYRYKGw==",
       "path": "microsoft.openapi/1.2.3",
       "hashPath": "microsoft.openapi.1.2.3.nupkg.sha512"
+    },
+    "NLog/5.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lNErNEPzYiZtUAlgvXpSRxUIPLIDHTLA8pKxkDDV//DCqzwp98FitFemOEmJjIuPvk3GC3ytrQMXsy7P9RTPIw==",
+      "path": "nlog/5.0.1",
+      "hashPath": "nlog.5.0.1.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.2.3": {
       "type": "package",

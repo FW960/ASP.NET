@@ -1,15 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "Y/sdkwJTp6KlDsPtqW1CU/aAAMGsesg1hgrkmYtdYji5CC3YuVtYbQ/NqO3RKqdR56dJSOXaEX0VKCr2AEpO8A==",
+  "dgSpecHash": "sNrzbvLvdK053PkX9RsZt/Y4Tgs0o9Pysz0usdWFpkDAxFhwdQAD5czC+QsvtHJQdZg7CPH4xRKQytxcIubsxw==",
   "success": true,
   "projectFilePath": "C:\\Users\\windo\\source\\repos\\ASP.NET\\WEB API\\MetricsAgent\\MetricsAgent.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\windo\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\windo\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\windo\\.nuget\\packages\\nlog\\5.0.1\\nlog.5.0.1.nupkg.sha512",
+    "C:\\Users\\windo\\.nuget\\packages\\stub.system.data.sqlite.core.netstandard\\1.0.116\\stub.system.data.sqlite.core.netstandard.1.0.116.nupkg.sha512",
     "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
-    "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+    "C:\\Users\\windo\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
+    "C:\\Users\\windo\\.nuget\\packages\\system.data.sqlite.core\\1.0.116\\system.data.sqlite.core.1.0.116.nupkg.sha512"
   ],
   "logs": []
 }

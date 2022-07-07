@@ -1,5 +1,6 @@
 ﻿using MetricsManager.Controllers.MetricsControllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace MetricsManager.Tests
 {
     public class CLRMetricsTests
     {
-        CLRMetricsController clrMetrics = new CLRMetricsController();
+        CLRMetricsController clrMetrics = new CLRMetricsController(new NullLogger<CLRMetricsController>(), new AgentsInfoValuesHolder());
 
         [Fact]
         public void FromAgent_ReturnsOk()

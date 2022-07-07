@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Xunit;
-
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace MetricsManager.Tests
 {
     public class HDDMetricsTests
     {
-        HDDMetricsController hddMetrics = new HDDMetricsController();
+        HDDMetricsController hddMetrics = new HDDMetricsController(new NullLogger<HDDMetricsController>(), new AgentsInfoValuesHolder());
         [Fact]
         public void FromAgent_ReturnsOk()
         {

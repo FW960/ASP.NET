@@ -3,7 +3,7 @@
 namespace MetricsAgent.Controllers
 {
     [Route("metrics/clr")]
-    public class CLRMetricsController : BaseAgentController
+    public class CLRMetricsController : IBaseAgentController
     {
         
         [HttpGet("errors-count/from/{fromTime}/to/{toTime}")]
