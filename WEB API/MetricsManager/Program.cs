@@ -1,13 +1,11 @@
 using MetricsManager;
 using NLog.Web;
 using NLog;
-
-
-
+using System.Text.Json;
+using MySqlConnector;
 
 Logger logger = NLogBuilder.ConfigureNLog("nLog.config").GetCurrentClassLogger();
 logger.Debug("init main");
-
 
 try
 {
@@ -22,6 +20,12 @@ try
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    string connectionText = File.ReadAllText("connectionSettings.json");
+
+    ConnectionStrings? connectionStrings = JsonSerializer.Deserialize<ConnectionStrings>(connectionText);
+
+    builder.Services.AddSingleton<MySqlConnection>(new MySqlConnection(connectionStrings?.Default));
 
     builder.Services.AddSingleton<AgentsInfoValuesHolder>();
 
@@ -51,6 +55,10 @@ finally
 {
     logger.Factory?.Shutdown();
 }
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 ﻿using MetricsAgent.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace MetricsAgent.Tests
 {
     public class NetworkMetricsTests
     {
-        public NetworkMetricsController networkMetrics = new NetworkMetricsController();
+        public NetworkMetricsController networkMetrics = new NetworkMetricsController(new NullLogger<NetworkMetricsController>());
         [Fact]
         public void FromAgent_ReturnsOK()
         {

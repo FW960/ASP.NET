@@ -1,11 +1,10 @@
 ﻿namespace MetricsManager
 {
-    public class AgentInfo
+    public class AgentInfoDTO
     {
-        public int AgentId { get; }
+        public int AgentId { get; set; }
 
-        public Uri AgentUri { get; }
-
+        public bool IsEnabled { get; set; }
         public override bool Equals(object? obj)
         {
             if (obj != null)

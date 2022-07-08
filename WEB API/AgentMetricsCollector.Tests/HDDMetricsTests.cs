@@ -1,5 +1,6 @@
 ﻿using MetricsAgent.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace MetricsAgent.Tests
 {
     public class HDDMetricsTests
     {
-        public HDDMetricsController hddMetrics = new HDDMetricsController();
+        public HDDMetricsController hddMetrics = new HDDMetricsController(new NullLogger<HDDMetricsController>());
         [Fact]
         public void FromAgent_ReturnsOK()
         {
