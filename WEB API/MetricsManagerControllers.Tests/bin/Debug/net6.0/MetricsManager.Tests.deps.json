@@ -372,6 +372,14 @@
           }
         }
       },
+      "MySqlConnector/2.1.10": {
+        "runtime": {
+          "lib/net6.0/MySqlConnector.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.10.0"
+          }
+        }
+      },
       "NETStandard.Library/1.6.1": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -1263,6 +1271,7 @@
       "xunit.runner.visualstudio/2.4.3": {},
       "MetricsAgent/1.0.0": {
         "dependencies": {
+          "MySqlConnector": "2.1.10",
           "NLog": "5.0.1",
           "NLog.Web": "5.0.0",
           "NLog.Web.AspNetCore": "5.0.0",
@@ -1273,8 +1282,22 @@
           "MetricsAgent.dll": {}
         }
       },
+      "MetricsAgent.Tests/1.0.0": {
+        "dependencies": {
+          "MetricsAgent": "1.0.0",
+          "Microsoft.NET.Test.Sdk": "16.11.0",
+          "NLog": "5.0.1",
+          "System.Data.SQLite.Core": "1.0.116",
+          "xunit": "2.4.1"
+        },
+        "runtime": {
+          "MetricsAgent.Tests.dll": {}
+        }
+      },
       "MetricsManager/1.0.0": {
         "dependencies": {
+          "MetricsAgent.Tests": "1.0.0",
+          "MySqlConnector": "2.1.10",
           "NLog": "5.0.1",
           "NLog.Web.AspNetCore": "5.0.0",
           "Swashbuckle.AspNetCore": "6.2.3",
@@ -1431,6 +1454,13 @@
       "sha512": "sha512-MmZIKNyvn8VrivSaqA8tqy5DmwUievC9zsuNTrcb00oY4IeGq6fXT5BQK329lZ05/tyi5vp30AWe9fl0d2PZQg==",
       "path": "moq/4.18.1",
       "hashPath": "moq.4.18.1.nupkg.sha512"
+    },
+    "MySqlConnector/2.1.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aVvetx5uRWlfnxXlbybf4t6plnH5IGrXSue8R2ZsBOAH8VfS1GuNYqQ4KREVAzN7JexPbhf41btg8pv34eBTrA==",
+      "path": "mysqlconnector/2.1.10",
+      "hashPath": "mysqlconnector.2.1.10.nupkg.sha512"
     },
     "NETStandard.Library/1.6.1": {
       "type": "package",
@@ -2091,6 +2121,11 @@
       "hashPath": "xunit.runner.visualstudio.2.4.3.nupkg.sha512"
     },
     "MetricsAgent/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MetricsAgent.Tests/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -2,19 +2,20 @@
 using System.Text.Json;
 using System.IO;
 using MySqlConnector;
+using System.Data.Common;
 
 namespace MetricsManager.Controllers
 {
-    [Route("[manage]")]
+    [Route("agents/manage")]
     [ApiController]
-    public class AgentsController : Controller
+    public class AgentsController : Controller 
     {
-        private readonly AgentsInfoValuesHolder _holder;
+        private readonly AgentsInfoValuesHolder<MySqlConnection> _holder;
 
         private readonly MySqlConnection _connection;
 
         private readonly ILogger<AgentsController> _logger;
-        public AgentsController(AgentsInfoValuesHolder holder, MySqlConnection connection, ILogger<AgentsController> logger)
+        public AgentsController(AgentsInfoValuesHolder<MySqlConnection> holder, MySqlConnection connection, ILogger<AgentsController> logger)
         {
             _holder = holder;
 
@@ -29,7 +30,7 @@ namespace MetricsManager.Controllers
             _logger.LogInformation($"Agents controller creating new agent {agent.AgentId}");
             try
             {
-                AgentInfoRepository repo = new AgentInfoRepository(_connection);
+                AgentInfoRepository<MySqlConnection> repo = new AgentInfoRepository<MySqlConnection>(_connection);
                 repo.Create(agent);
                 _holder.values.Add(agent);
                 _logger.LogInformation($"Agent created {agent.AgentId}");

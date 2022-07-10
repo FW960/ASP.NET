@@ -1,35 +1,74 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MetricsAgent.DTOs;
+using MetricsAgent.Repository;
+using Microsoft.AspNetCore.Mvc;
+using MySqlConnector;
+using System.Data.Common;
 
 namespace MetricsManager.Controllers.MetricsControllers
 {
-    [Route("metrics/network")]
+    [Route("metrics/manage/network")]
     [ApiController]
-    public class NetworkMetricsController : IBaseMetricManagerController
+    public class NetworkMetricsController: IBaseMetricManagerController<NetworkMetricsDTO, MySqlConnection> 
     {
-        private readonly ILogger<NetworkMetricsController> _logger;
+        protected readonly AgentsInfoValuesHolder<MySqlConnection> _holder;
 
-        private readonly AgentsInfoValuesHolder _holder;
-
-        public NetworkMetricsController(ILogger<NetworkMetricsController> logger, AgentsInfoValuesHolder holder)
+        public NetworkMetricsController(ILogger<NetworkMetricsController> logger, AgentsInfoValuesHolder<MySqlConnection> holder, MySqlConnection connector) : base(logger, connector)
         {
-            _logger = logger;
-            _logger.LogDebug(1, "Network Manager Metrics Controller.");
             _holder = holder;
+            _logger.LogDebug(1, "Network Manager Metrics Controller.");
         }
 
         [HttpGet("agent/{agentId}/from/{fromTime}/to/{toTime}")]
-        public override IActionResult GetMetricsFromAgent([FromRoute] int agentId, [FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
+        public override NetworkMetricsDTO GetMetricsFromAgent([FromRoute] int agentId, [FromRoute] string fromTime, [FromRoute] string toTime)
         {
-            _logger.LogInformation($"Manager getting Network metrics from agent {agentId}. Time: from {fromTime.Seconds} to {toTime.Seconds}");
+            _logger.LogInformation($"Manager getting Network metrics from agent {agentId}. Time: from {fromTime} to {toTime}");
 
-            return Ok();
+            DateTime from = DateTime.Parse(fromTime);
+
+            DateTime to = DateTime.Parse(toTime);
+
+            try
+            {
+                NetworkMetricsRepository<MySqlConnection> repo = new NetworkMetricsRepository<MySqlConnection>(_connector);
+
+                NetworkMetricsDTO dto = repo.GetByTimePeriod(from, to, agentId);
+
+                _logger.LogInformation($"Manager succesfully got Network metrics from agent {agentId}.");
+
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+
+                throw new Exception(ex.ToString());
+            }
         }
         [HttpGet("cluster/from/{fromTime}/to/{toTime}")]
-        public override IActionResult GetMetricsFromAllCluster([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
+        public override NetworkMetricsDTO[] GetMetricsFromAllCluster([FromRoute] string fromTime, [FromRoute] string toTime)
         {
-            _logger.LogInformation($"Manager getting Network metrics from all agents. Time: from {fromTime.Seconds} to {toTime.Seconds}");
+            _logger.LogInformation($"Manager getting Network metrics from all agents. Time: from {fromTime} to {toTime}");
 
-            return Ok();
+            DateTime from = DateTime.Parse(fromTime);
+
+            DateTime to = DateTime.Parse(toTime);
+
+            try
+            {
+                NetworkMetricsRepository<MySqlConnection> repo = new NetworkMetricsRepository<MySqlConnection>(_connector);
+
+                NetworkMetricsDTO[] dto = repo.GetByTimePeriod(from, to);
+
+                _logger.LogInformation($"Manager succesfully got Network metrics from all agents.");
+
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+
+                throw new Exception(ex.ToString());
+            }
         }
     }
 

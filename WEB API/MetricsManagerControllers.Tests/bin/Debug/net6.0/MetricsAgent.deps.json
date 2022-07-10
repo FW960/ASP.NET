@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "MetricsAgent/1.0.0": {
         "dependencies": {
+          "MySqlConnector": "2.1.10",
           "NLog": "5.0.1",
           "NLog.Web": "5.0.0",
           "NLog.Web.AspNetCore": "5.0.0",
@@ -51,6 +52,14 @@
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
             "assemblyVersion": "1.2.3.0",
             "fileVersion": "1.2.3.0"
+          }
+        }
+      },
+      "MySqlConnector/2.1.10": {
+        "runtime": {
+          "lib/net6.0/MySqlConnector.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.10.0"
           }
         }
       },
@@ -237,6 +246,13 @@
       "sha512": "sha512-Nug3rO+7Kl5/SBAadzSMAVgqDlfGjJZ0GenQrLywJ84XGKO0uRqkunz5Wyl0SDwcR71bAATXvSdbdzPrYRYKGw==",
       "path": "microsoft.openapi/1.2.3",
       "hashPath": "microsoft.openapi.1.2.3.nupkg.sha512"
+    },
+    "MySqlConnector/2.1.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aVvetx5uRWlfnxXlbybf4t6plnH5IGrXSue8R2ZsBOAH8VfS1GuNYqQ4KREVAzN7JexPbhf41btg8pv34eBTrA==",
+      "path": "mysqlconnector/2.1.10",
+      "hashPath": "mysqlconnector.2.1.10.nupkg.sha512"
     },
     "NLog/5.0.1": {
       "type": "package",

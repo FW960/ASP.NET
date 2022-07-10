@@ -126,3 +126,9 @@ C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\Castle.Core.dll
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\Moq.dll
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\NLog.Web.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\connectionSettings.json
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\MetricsAgent.Tests.deps.json
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\MetricsAgent.Tests.runtimeconfig.json
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\MySqlConnector.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\MetricsAgent.Tests.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsManagerControllers.Tests\bin\Debug\net6.0\MetricsAgent.Tests.pdb

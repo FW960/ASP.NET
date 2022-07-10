@@ -1,11 +1,12 @@
 ﻿using MySqlConnector;
+using System.Data.Common;
 
 namespace MetricsManager
 {
-    public class AgentInfoRepository
+    public class AgentInfoRepository<T> where T : DbConnection
     {
-        private readonly MySqlConnection _connector;
-        public AgentInfoRepository(MySqlConnection connector)
+        private readonly T _connector;
+        public AgentInfoRepository(T connector)
         {
             _connector = connector;
         }
@@ -17,9 +18,9 @@ namespace MetricsManager
 
                 var cmd = _connector.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO agentsinfo(agent_id) values(@id)";
+                int isEnabled = true == entity.IsEnabled? 1 : 0;
 
-                cmd.Parameters.AddWithValue("@id", entity.AgentId);
+                cmd.CommandText = $"INSERT INTO agentsinfo(id, isEnabled) values('{entity.AgentId}', '{isEnabled}')";
 
                 cmd.Prepare();
 
@@ -43,9 +44,7 @@ namespace MetricsManager
 
                 var cmd = _connector.CreateCommand();
 
-                cmd.CommandText = "DELETE FROM agentsinfo where agentId = @id";
-
-                cmd.Parameters.AddWithValue("@id", agentId);
+                cmd.CommandText = $"DELETE FROM agentsinfo where id = '{agentId}'";
 
                 cmd.Prepare();
 
@@ -61,6 +60,7 @@ namespace MetricsManager
             }
 
         }
+
         public void Enable(AgentInfoDTO entity)
         {
             throw new NotImplementedException();

@@ -1,11 +1,23 @@
 {
   "Version": 1,
-  "Hash": "5v9tX8kwmdDNhBgFNnqmhkdQFsBmS4dA5kVtXoitgcs=",
+  "Hash": "VW9BYeJkord6PX5lwyiMDBnXLmwAxcPeP76ssBFEVK0=",
   "Source": "MetricsManager",
   "BasePath": "_content/MetricsManager",
   "Mode": "Default",
   "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\windo\\source\\repos\\ASP.NET\\WEB API\\MetricsAgent\\MetricsAgent.csproj",
+      "Version": 2,
+      "Source": "MetricsAgent",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier"
+    }
+  ],
   "DiscoveryPatterns": [],
   "Assets": []
 }
