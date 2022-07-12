@@ -1,5 +1,6 @@
-﻿using MetricsAgent.DTOs;
-using MetricsAgent.Repository;
+﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
+using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using System.Data.Common;
@@ -9,9 +10,9 @@ namespace MetricsAgent.Controllers
 
     [Route("metrics/cpu")]
     [ApiController]
-    public class CPUMetricsController : BaseAgentController<CPUMetricsDTO, MySqlConnection>
+    public class CPUMetricsController : BaseAgentController<CPUMetricsDTO, MyDbContext>
     {
-        public CPUMetricsController(ILogger<CPUMetricsController> logger, MySqlConnection connector) : base(logger, connector)
+        public CPUMetricsController(ILogger<CPUMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
         {
             _logger.LogDebug(1, "CPU Agent Metrics Controller.");
         }
@@ -27,7 +28,7 @@ namespace MetricsAgent.Controllers
 
             try
             {
-                CPUMetricsRepository<MySqlConnection> repo = new CPUMetricsRepository<MySqlConnection>(_connector);
+                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
 
                 CPUMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
 
@@ -45,15 +46,15 @@ namespace MetricsAgent.Controllers
         [HttpPost("post")]
         public override void PostMetrics(CPUMetricsDTO dto)
         {
-            _logger.LogInformation($"Agent {dto.id} posting CPU metrics.");
+            _logger.LogInformation($"Agent {dto.agent_id} posting CPU metrics.");
 
             try
             {
-                CPUMetricsRepository<MySqlConnection> repo = new CPUMetricsRepository<MySqlConnection>(_connector);
+                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
 
                 repo.Create(dto);
 
-                _logger.LogInformation($"Agent {dto.id} succesfully posted CPU metrics");
+                _logger.LogInformation($"Agent {dto.agent_id} succesfully posted CPU metrics");
 
             }
             catch (Exception ex)

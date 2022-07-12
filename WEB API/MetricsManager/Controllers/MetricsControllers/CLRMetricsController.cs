@@ -1,5 +1,6 @@
-﻿using MetricsAgent.DTOs;
-using MetricsAgent.Repository;
+﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
+using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using System.Data.Common;
@@ -8,20 +9,38 @@ namespace MetricsManager.Controllers.MetricsControllers
 {
     [Route("metrics/manage/clr")]
     [ApiController]
-    public class CLRMetricsController : IBaseMetricManagerController<CLRMetricsDTO, MySqlConnection> 
+    public class CLRMetricsController : IBaseMetricManagerController<CLRMetricsDTO, MyDbContext> 
     {
-        protected readonly AgentsInfoValuesHolder<MySqlConnection> _holder;
-
-        public CLRMetricsController(ILogger<CLRMetricsController> logger, AgentsInfoValuesHolder<MySqlConnection> holder, MySqlConnection connector) : base(logger, connector)
+        public CLRMetricsController(ILogger<CLRMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
         {
-            _holder = holder;
             _logger.LogDebug(1, "CLR Manager Metrics Controller.");
         }
-
-        [HttpGet("agent/{agentId}/from/{fromTime}/to/{toTime}")]
-        public override CLRMetricsDTO GetMetricsFromAgent([FromRoute] int agentId, [FromRoute] string fromTime, [FromRoute] string toTime)
+        [HttpGet("agent/{id}")]
+        public override List<CLRMetricsDTO> GetAllMetricsFromAgent([FromRoute] int id)
         {
-            _logger.LogInformation($"Manager getting CLR metrics from agent {agentId}. Time: from {fromTime} to {toTime}");
+            _logger.LogInformation($"Manager getting CLR metrics from agent {id}");
+
+            try
+            {
+                CLRMetricsRepository<MyDbContext> repo = new CLRMetricsRepository<MyDbContext>(_dbContext);
+
+                List<CLRMetricsDTO> metrics = repo.GetAllByAgent(id);
+
+                _logger.LogInformation($"Manager sucessfully got CLR metrics from agent {id}");
+
+                return metrics;
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
+        public override CLRMetricsDTO GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
+        {
+            _logger.LogInformation($"Manager getting CLR metrics from agent {id}. Time: from {fromTime} to {toTime}");
 
             DateTime from = DateTime.Parse(fromTime);
 
@@ -29,11 +48,11 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CLRMetricsRepository<MySqlConnection> repo = new CLRMetricsRepository<MySqlConnection>(_connector);
+                CLRMetricsRepository<MyDbContext> repo = new CLRMetricsRepository<MyDbContext>(_dbContext);
 
-                CLRMetricsDTO dto = repo.GetByTimePeriod(from, to, agentId);
+                CLRMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
 
-                _logger.LogInformation($"Manager succesfully got CLR metrics from agent {agentId}.");
+                _logger.LogInformation($"Manager succesfully got CLR metrics from agent {id}.");
 
                 return dto;
             }
@@ -45,7 +64,7 @@ namespace MetricsManager.Controllers.MetricsControllers
             }
         }
         [HttpGet("cluster/from/{fromTime}/to/{toTime}")]
-        public override CLRMetricsDTO[] GetMetricsFromAllCluster([FromRoute] string fromTime, [FromRoute] string toTime)
+        public override List<CLRMetricsDTO> GetMetricsFromAllCluster([FromRoute] string fromTime, [FromRoute] string toTime)
         {
             _logger.LogInformation($"Manager getting CLR metrics from all agents. Time: from {fromTime} to {toTime}");
 
@@ -55,13 +74,13 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CLRMetricsRepository<MySqlConnection> repo = new CLRMetricsRepository<MySqlConnection>(_connector);
+                CLRMetricsRepository<MyDbContext> repo = new CLRMetricsRepository<MyDbContext>(_dbContext);
 
-                CLRMetricsDTO[] dto = repo.GetByTimePeriod(from, to);
+                List<CLRMetricsDTO> metrics = repo.GetByTimePeriod(from, to);
 
                 _logger.LogInformation($"Manager succesfully got CLR metrics from all agents.");
 
-                return dto;
+                return metrics;
             }
             catch (Exception ex)
             {

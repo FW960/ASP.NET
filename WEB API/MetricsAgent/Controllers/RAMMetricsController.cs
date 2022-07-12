@@ -1,5 +1,6 @@
-﻿using MetricsAgent.DTOs;
-using MetricsAgent.Repository;
+﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
+using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using System.Data.Common;
@@ -8,9 +9,9 @@ namespace MetricsAgent.Controllers
 {
     [Route("metrics/ram")]
     [ApiController]
-    public class RAMMetricsController : BaseAgentController<RAMMetricsDTO, MySqlConnection> 
+    public class RAMMetricsController : BaseAgentController<RAMMetricsDTO, MyDbContext> 
     {
-        public RAMMetricsController(ILogger<RAMMetricsController> logger, MySqlConnection connector) : base(logger, connector)
+        public RAMMetricsController(ILogger<RAMMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
         {
             _logger.LogDebug(1, "RAM Agent Metrics Logger");
         }
@@ -24,7 +25,7 @@ namespace MetricsAgent.Controllers
 
             DateTime to = DateTime.Parse(toTime);
 
-            RAMMetricsRepository<MySqlConnection> repo = new RAMMetricsRepository<MySqlConnection>(_connector);
+            RAMMetricsRepository<MyDbContext> repo = new RAMMetricsRepository<MyDbContext>(_dbContext);
 
             try
             {
@@ -46,15 +47,15 @@ namespace MetricsAgent.Controllers
         [HttpPost("post")]
         public override void PostMetrics(RAMMetricsDTO dto)
         {
-            _logger.LogInformation($"Agent {dto.id} posting RAM metrics.");
+            _logger.LogInformation($"Agent {dto.agent_id} posting RAM metrics.");
 
             try
             {
-                RAMMetricsRepository<MySqlConnection> repo = new RAMMetricsRepository<MySqlConnection>(_connector);
+                RAMMetricsRepository<MyDbContext> repo = new RAMMetricsRepository<MyDbContext>(_dbContext);
 
                 repo.Create(dto);
 
-                _logger.LogInformation($"Agent {dto.id} succesfully posted RAM metrics");
+                _logger.LogInformation($"Agent {dto.agent_id} succesfully posted RAM metrics");
 
             }
             catch (Exception ex)

@@ -1,0 +1,14 @@
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\bin\Debug\net6.0\MetricsEntetiesAndFunctions.deps.json
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\bin\Debug\net6.0\MetricsEntetiesAndFunctions.runtimeconfig.json
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\bin\Debug\net6.0\MetricsEntetiesAndFunctions.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\bin\Debug\net6.0\ref\MetricsEntetiesAndFunctions.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\bin\Debug\net6.0\MetricsEntetiesAndFunctions.pdb
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\MetricsEntetiesAndFunctions.csproj.AssemblyReference.cache
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\MetricsEntetiesAndFunctions.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\MetricsEntetiesAndFunctions.AssemblyInfoInputs.cache
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\MetricsEntetiesAndFunctions.AssemblyInfo.cs
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\MetricsEntetiesAndFunctions.csproj.CoreCompileInputs.cache
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\MetricsEntetiesAndFunctions.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\ref\MetricsEntetiesAndFunctions.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\MetricsEntetiesAndFunctions.pdb
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsEntetiesAndFunctions\obj\Debug\net6.0\MetricsEntetiesAndFunctions.genruntimeconfig.cache

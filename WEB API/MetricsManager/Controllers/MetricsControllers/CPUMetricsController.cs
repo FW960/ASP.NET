@@ -1,5 +1,6 @@
-﻿using MetricsAgent.DTOs;
-using MetricsAgent.Repository;
+﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
+using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using System.Data.Common;
@@ -8,20 +9,39 @@ namespace MetricsManager.Controllers.MetricsControllers
 {
     [Route("metrics/manage/cpu")]
     [ApiController]
-    public class CPUMetricsController : IBaseMetricManagerController<CPUMetricsDTO, MySqlConnection>
+    public class CPUMetricsController : IBaseMetricManagerController<CPUMetricsDTO, MyDbContext>
     {
-        protected readonly AgentsInfoValuesHolder<MySqlConnection> _holder;
-
-        public CPUMetricsController(ILogger<CPUMetricsController> logger, AgentsInfoValuesHolder<MySqlConnection> holder, MySqlConnection connector) : base(logger, connector)
+        public CPUMetricsController(ILogger<CPUMetricsController> logger, MyDbContext connector) : base(logger, connector)
         {
-            _holder = holder;
             _logger.LogDebug(1, "CPU Manager Metrics Controller.");
         }
-
-        [HttpGet("agent/{agentId}/from/{fromTime}/to/{toTime}")]
-        public override CPUMetricsDTO GetMetricsFromAgent([FromRoute] int agentId, [FromRoute] string fromTime, [FromRoute] string toTime)
+        [HttpGet("agent/{id}")]
+        public override List<CPUMetricsDTO> GetAllMetricsFromAgent([FromRoute] int id)
         {
-            _logger.LogInformation($"Manager getting CPU metrics from agent {agentId}. Time: from {fromTime} to {toTime}");
+            _logger.LogInformation($"Manager getting CPU metrics from agent {id}");
+
+            try
+            {
+                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
+
+                List<CPUMetricsDTO> metrics = repo.GetAllByAgent(id);
+
+                _logger.LogInformation($"Manager sucessfully got CPU metrics from agent {id}");
+
+                return metrics;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
+        public override CPUMetricsDTO GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
+        {
+            _logger.LogInformation($"Manager getting CPU metrics from agent {id}. Time: from {fromTime} to {toTime}");
 
             DateTime from = DateTime.Parse(fromTime);
 
@@ -29,11 +49,11 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CPUMetricsRepository<MySqlConnection> repo = new CPUMetricsRepository<MySqlConnection>(_connector);
+                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
 
-                CPUMetricsDTO dto = repo.GetByTimePeriod(from, to, agentId);
+                CPUMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
 
-                _logger.LogInformation($"Manager succesfully got CPU metrics from agent {agentId}.");
+                _logger.LogInformation($"Manager succesfully got CPU metrics from agent {id}.");
 
                 return dto;
             }
@@ -45,7 +65,7 @@ namespace MetricsManager.Controllers.MetricsControllers
             }
         }
         [HttpGet("cluster/from/{fromTime}/to/{toTime}")]
-        public override CPUMetricsDTO[] GetMetricsFromAllCluster([FromRoute] string fromTime, [FromRoute] string toTime)
+        public override List<CPUMetricsDTO> GetMetricsFromAllCluster([FromRoute] string fromTime, [FromRoute] string toTime)
         {
             _logger.LogInformation($"Manager getting CPU metrics from all agents. Time: from {fromTime} to {toTime}");
 
@@ -55,13 +75,13 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CPUMetricsRepository<MySqlConnection> repo = new CPUMetricsRepository<MySqlConnection>(_connector);
+                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
 
-                CPUMetricsDTO[] dto = repo.GetByTimePeriod(from, to);
+                List<CPUMetricsDTO> metrics = repo.GetByTimePeriod(from, to);
 
                 _logger.LogInformation($"Manager succesfully got CPU metrics from all agents.");
 
-                return dto;
+                return metrics;
             }
             catch (Exception ex)
             {

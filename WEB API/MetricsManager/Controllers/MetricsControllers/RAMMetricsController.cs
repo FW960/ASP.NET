@@ -1,5 +1,6 @@
-﻿using MetricsAgent.DTOs;
-using MetricsAgent.Repository;
+﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
+using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using NLog;
@@ -9,19 +10,40 @@ namespace MetricsManager.Controllers.MetricsControllers
 {
     [Route("metrics/manage/ram")]
     [ApiController]
-    public class RAMMetricsController : IBaseMetricManagerController<RAMMetricsDTO, MySqlConnection>
+    public class RAMMetricsController : IBaseMetricManagerController<RAMMetricsDTO, MyDbContext>
     {
-        protected readonly AgentsInfoValuesHolder<MySqlConnection> _holder;
-        public RAMMetricsController(ILogger<RAMMetricsController> logger, AgentsInfoValuesHolder<MySqlConnection> holder, MySqlConnection connector) : base(logger, connector)
+        public RAMMetricsController(ILogger<RAMMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
         {
-            _holder = holder;
             _logger.LogDebug(1, "RAM Manager Metrics Controller.");
         }
 
-        [HttpGet("agent/{agentId}/from/{fromTime}/to/{toTime}")]
-        public override RAMMetricsDTO GetMetricsFromAgent([FromRoute] int agentId, [FromRoute] string fromTime, [FromRoute] string toTime)
+        [HttpGet("agent/{id}")]
+        public override List<RAMMetricsDTO> GetAllMetricsFromAgent([FromRoute] int id)
         {
-            _logger.LogInformation($"Manager getting RAM metrics from agent {agentId}. Time: from {fromTime} to {toTime}");
+            _logger.LogInformation($"Manager getting RAM metrics from agent {id}");
+
+            try
+            {
+                RAMMetricsRepository<MyDbContext> repo = new RAMMetricsRepository<MyDbContext>(_dbContext);
+
+                List<RAMMetricsDTO> metrics = repo.GetAllByAgent(id);
+
+                _logger.LogInformation($"Manager sucessfully got RAM metrics from agent {id}");
+
+                return metrics;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
+        public override RAMMetricsDTO GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
+        {
+            _logger.LogInformation($"Manager getting RAM metrics from agent {id}. Time: from {fromTime} to {toTime}");
 
             DateTime from = DateTime.Parse(fromTime);
 
@@ -29,11 +51,11 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                RAMMetricsRepository<MySqlConnection> repo = new RAMMetricsRepository<MySqlConnection>(_connector);
+                RAMMetricsRepository<MyDbContext> repo = new RAMMetricsRepository<MyDbContext>(_dbContext);
 
-                RAMMetricsDTO dto = repo.GetByTimePeriod(from, to, agentId);
+                RAMMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
 
-                _logger.LogInformation($"Manager succesfully got RAM metrics from agent {agentId}.");
+                _logger.LogInformation($"Manager succesfully got RAM metrics from agent {id}.");
 
                 return dto;
             }
@@ -45,7 +67,7 @@ namespace MetricsManager.Controllers.MetricsControllers
             }
         }
         [HttpGet("cluster/from/{fromTime}/to/{toTime}")]
-        public override RAMMetricsDTO[] GetMetricsFromAllCluster([FromRoute] string fromTime, [FromRoute] string toTime)
+        public override List<RAMMetricsDTO> GetMetricsFromAllCluster([FromRoute] string fromTime, [FromRoute] string toTime)
         {
             _logger.LogInformation($"Manager getting RAM metrics from all agents. Time: from {fromTime} to {toTime}");
 
@@ -55,13 +77,13 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                RAMMetricsRepository<MySqlConnection> repo = new RAMMetricsRepository<MySqlConnection>(_connector);
+                RAMMetricsRepository<MyDbContext> repo = new RAMMetricsRepository<MyDbContext>(_dbContext);
 
-                RAMMetricsDTO[] dto = repo.GetByTimePeriod(from, to);
+                List<RAMMetricsDTO> metrics = repo.GetByTimePeriod(from, to);
 
                 _logger.LogInformation($"Manager succesfully got RAM metrics from all agents.");
 
-                return dto;
+                return metrics;
             }
             catch (Exception ex)
             {

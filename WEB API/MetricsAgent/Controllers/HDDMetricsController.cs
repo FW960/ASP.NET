@@ -1,5 +1,6 @@
-﻿using MetricsAgent.DTOs;
+﻿using DTOs;
 using MetricsAgent.Repository;
+using MetricsEntetiesAndFunctions.Entities;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using System.Data.Common;
@@ -8,9 +9,9 @@ namespace MetricsAgent.Controllers
 {
     [Route("metrics/hdd")]
     [ApiController]
-    public class HDDMetricsController : BaseAgentController<HDDMetricsDTO, MySqlConnection> 
+    public class HDDMetricsController : BaseAgentController<HDDMetricsDTO, MyDbContext> 
     {
-        public HDDMetricsController(ILogger<HDDMetricsController> logger, MySqlConnection connector) : base(logger, connector)
+        public HDDMetricsController(ILogger<HDDMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
         {
             _logger.LogDebug(1, "HDD Agent Metrics Controller.");
         }
@@ -26,7 +27,7 @@ namespace MetricsAgent.Controllers
 
             try
             {
-                HDDMetricsRepository<MySqlConnection> repo = new HDDMetricsRepository<MySqlConnection>(_connector);
+                HDDMetricsRepository<MyDbContext> repo = new HDDMetricsRepository<MyDbContext>(_dbContext);
 
                 HDDMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
 
@@ -43,15 +44,15 @@ namespace MetricsAgent.Controllers
         [HttpPost("post")]
         public override void PostMetrics(HDDMetricsDTO dto)
         {
-            _logger.LogInformation($"Agent {dto.id} posting HDD metrics.");
+            _logger.LogInformation($"Agent {dto.agent_id} posting HDD metrics.");
 
             try
             {
-                HDDMetricsRepository<MySqlConnection> repo = new HDDMetricsRepository<MySqlConnection>(_connector);
+                HDDMetricsRepository<MyDbContext> repo = new HDDMetricsRepository<MyDbContext>(_dbContext);
 
                 repo.Create(dto);
 
-                _logger.LogInformation($"Agent {dto.id} succesfully posted HDD metrics");
+                _logger.LogInformation($"Agent {dto.agent_id} succesfully posted HDD metrics");
 
             }
             catch (Exception ex)

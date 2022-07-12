@@ -4,6 +4,8 @@ using NLog;
 using System.Text.Json;
 using MySqlConnector;
 using MetricsManager.Controllers.MetricsControllers;
+using MetricsEntetiesAndFunctions.Entities;
+using Microsoft.EntityFrameworkCore;
 
 Logger logger = NLogBuilder.ConfigureNLog("nLog.config").GetCurrentClassLogger();
 logger.Debug("init main");
@@ -28,7 +30,7 @@ try
 
     builder.Services.AddSingleton<MySqlConnection>(new MySqlConnection(connectionStrings?.Default));
 
-    builder.Services.AddSingleton<AgentsInfoValuesHolder<MySqlConnection>>();
+    builder.Services.AddDbContext<MyDbContext>(options => options.UseMySql(connectionStrings.Default, ServerVersion.AutoDetect(connectionStrings.Default)));
 
     var app = builder.Build();
 

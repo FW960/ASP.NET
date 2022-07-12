@@ -1,5 +1,6 @@
-﻿using MetricsAgent.DTOs;
-using MetricsAgent.Repository;
+﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
+using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using System.Data.Common;
@@ -8,9 +9,9 @@ namespace MetricsAgent.Controllers
 {
     [Route("metrics/network")]
     [ApiController]
-    public class NetworkMetricsController : BaseAgentController<NetworkMetricsDTO, MySqlConnection> 
+    public class NetworkMetricsController : BaseAgentController<NetworkMetricsDTO, MyDbContext> 
     {
-        public NetworkMetricsController(ILogger<NetworkMetricsController> logger, MySqlConnection connector) : base(logger, connector)
+        public NetworkMetricsController(ILogger<NetworkMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
         {
             _logger.LogDebug(1, "Network Agent Metrics Controller.");
         }
@@ -26,7 +27,7 @@ namespace MetricsAgent.Controllers
 
             try
             {
-                NetworkMetricsRepository<MySqlConnection> repo = new NetworkMetricsRepository<MySqlConnection>(_connector);
+                NetworkMetricsRepository<MyDbContext> repo = new NetworkMetricsRepository<MyDbContext>(_dbContext);
 
                 NetworkMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
 
@@ -44,15 +45,15 @@ namespace MetricsAgent.Controllers
         [HttpPost("post")]
         public override void PostMetrics(NetworkMetricsDTO dto)
         {
-            _logger.LogInformation($"Agent {dto.id} posting Network metrics.");
+            _logger.LogInformation($"Agent {dto.agent_id} posting Network metrics.");
 
             try
             {
-                NetworkMetricsRepository<MySqlConnection> repo = new NetworkMetricsRepository<MySqlConnection>(_connector);
+                NetworkMetricsRepository<MyDbContext> repo = new NetworkMetricsRepository<MyDbContext>(_dbContext);
 
                 repo.Create(dto);
 
-                _logger.LogInformation($"Agent {dto.id} succesfully posted Network metrics");
+                _logger.LogInformation($"Agent {dto.agent_id} succesfully posted Network metrics");
 
             }
             catch (Exception ex)
