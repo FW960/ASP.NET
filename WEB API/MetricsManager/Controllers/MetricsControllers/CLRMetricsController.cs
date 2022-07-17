@@ -22,7 +22,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CLRMetricsRepository<MyDbContext> repo = new CLRMetricsRepository<MyDbContext>(_dbContext);
+                CLRMetricsRepository repo = new CLRMetricsRepository(_dbContext);
 
                 List<CLRMetricsDTO> metrics = repo.GetAllByAgent(id);
 
@@ -38,7 +38,7 @@ namespace MetricsManager.Controllers.MetricsControllers
         }
 
         [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
-        public override CLRMetricsDTO GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
+        public override List<CLRMetricsDTO> GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
         {
             _logger.LogInformation($"Manager getting CLR metrics from agent {id}. Time: from {fromTime} to {toTime}");
 
@@ -48,9 +48,9 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CLRMetricsRepository<MyDbContext> repo = new CLRMetricsRepository<MyDbContext>(_dbContext);
+                CLRMetricsRepository repo = new CLRMetricsRepository(_dbContext);
 
-                CLRMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                List<CLRMetricsDTO> dto = repo.GetByTimePeriod(from, to, id);
 
                 _logger.LogInformation($"Manager succesfully got CLR metrics from agent {id}.");
 
@@ -74,7 +74,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CLRMetricsRepository<MyDbContext> repo = new CLRMetricsRepository<MyDbContext>(_dbContext);
+                CLRMetricsRepository repo = new CLRMetricsRepository(_dbContext);
 
                 List<CLRMetricsDTO> metrics = repo.GetByTimePeriod(from, to);
 

@@ -22,7 +22,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                NetworkMetricsRepository<MyDbContext> repo = new NetworkMetricsRepository<MyDbContext>(_dbContext);
+                NetworkMetricsRepository repo = new NetworkMetricsRepository(_dbContext);
 
                 List<NetworkMetricsDTO> metrics = repo.GetAllByAgent(id);
 
@@ -39,7 +39,7 @@ namespace MetricsManager.Controllers.MetricsControllers
         }
 
         [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
-        public override NetworkMetricsDTO GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
+        public override List<NetworkMetricsDTO> GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
         {
             _logger.LogInformation($"Manager getting Network metrics from agent {id}. Time: from {fromTime} to {toTime}");
 
@@ -49,9 +49,9 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                NetworkMetricsRepository<MyDbContext> repo = new NetworkMetricsRepository<MyDbContext>(_dbContext);
+                NetworkMetricsRepository repo = new NetworkMetricsRepository(_dbContext);
 
-                NetworkMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                List<NetworkMetricsDTO> dto = repo.GetByTimePeriod(from, to, id);
 
                 _logger.LogInformation($"Manager succesfully got Network metrics from agent {id}.");
 
@@ -75,7 +75,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                NetworkMetricsRepository<MyDbContext> repo = new NetworkMetricsRepository<MyDbContext>(_dbContext);
+                NetworkMetricsRepository repo = new NetworkMetricsRepository(_dbContext);
 
                 List<NetworkMetricsDTO> metrics = repo.GetByTimePeriod(from, to);
 

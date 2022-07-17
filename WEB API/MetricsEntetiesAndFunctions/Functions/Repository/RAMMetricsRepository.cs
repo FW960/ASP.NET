@@ -1,15 +1,17 @@
 ﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
+using System.Collections.Concurrent;
 using System.Data.Common;
 
 namespace MetricsEntetiesAndFunctions.Functions.Repository
 {
-    public class RAMMetricsRepository<T> : IRepository<RAMMetricsDTO> where T : DbContext
+    public class RAMMetricsRepository : IRepository<RAMMetricsDTO>
     {
-        private readonly T _dbContext;
+        private readonly MyDbContext _dbContext;
 
-        public RAMMetricsRepository(T dbContext)
+        public RAMMetricsRepository(MyDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -38,12 +40,12 @@ namespace MetricsEntetiesAndFunctions.Functions.Repository
             return metrics;
         }
 
-        public RAMMetricsDTO GetByTimePeriod(DateTime from, DateTime to, int id)
+        public List<RAMMetricsDTO> GetByTimePeriod(DateTime from, DateTime to, int id)
         {
-            var foundMetric = _dbContext.Set<RAMMetricsDTO>().Where(entity => 
-            entity.agent_id == id && 
-            entity.to_time == to && 
-            entity.from_time == from).FirstOrDefault();
+            var foundMetric = _dbContext.Set<RAMMetricsDTO>().Where(entity =>
+            entity.agent_id == id &&
+            entity.time <= to &&
+            entity.time >= from).ToList();
 
             if (foundMetric == null)
                 throw new Exception("Metric haven't been found.");
@@ -54,13 +56,26 @@ namespace MetricsEntetiesAndFunctions.Functions.Repository
         public List<RAMMetricsDTO> GetByTimePeriod(DateTime from, DateTime to)
         {
             var foundMetrics = _dbContext.Set<RAMMetricsDTO>().Where(entity =>
-            entity.to_time == to &&
-            entity.from_time == from).ToList();
+            entity.time <= to &&
+            entity.time >= from).ToList();
 
             if (foundMetrics.Count == 0)
                 throw new Exception("Metrics haven't been found.");
 
             return foundMetrics;
+        }
+
+        public List<RAMMetricsDTO> GetByTimePeriod(DateTime from, DateTime to, List<RAMMetricsDTO> records)
+        {
+            List<RAMMetricsDTO> metrics = new List<RAMMetricsDTO>();
+
+            foreach(var record in records)
+            {
+                if (record.time >= from || record.time <= to)
+                    metrics.Add(record);
+            }
+
+            return metrics;
         }
     }
 }

@@ -24,73 +24,21 @@ namespace MetricsManager.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult RegisterAgent()
+        public AgentInfo RegisterAgent([FromBody] string pcName)
         {
             _logger.LogInformation($"Agents controller creating new agent");
             try
             {
                 AgentInfoRepository<MyDbContext> repo = new AgentInfoRepository<MyDbContext>(_dbContext);
-                var agent = repo.Create();
-                _logger.LogInformation($"Agent created {agent.id}");
-                return Ok($"Agents controller created agent {agent.id}");
+                var agent = repo.Create(pcName);
+                _logger.LogInformation($"Agents controller created {agent.id}");
+                return agent;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return BadRequest(ex.ToString());
+                return null;
             }
-        }
-        [HttpPatch("agent/enable/{id}")]
-        public IActionResult EnableAgent([FromRoute] int id)
-        {
-            _logger.LogInformation($"Agents controller activating agent {id}");
-
-            try
-            {
-                AgentInfoRepository<MyDbContext> repo = new AgentInfoRepository<MyDbContext>(_dbContext);
-
-                repo.Enable(id);
-
-                _logger.LogInformation($"Agents controller activated agent {id}");
-
-                return Ok();
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return BadRequest(ex.ToString());
-            }
-
-        }
-        [HttpPatch("agent/disable/{id}")]
-        public IActionResult DisableAgent([FromRoute] int id)
-        {
-            _logger.LogInformation($"Agents controller deactivating agent {id}");
-
-            try
-            {
-                AgentInfoRepository<MyDbContext> repo = new AgentInfoRepository<MyDbContext>(_dbContext);
-
-                repo.Disable(id);
-
-                _logger.LogInformation($"Agents controller deactivated agent {id}");
-
-                return Ok();
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return BadRequest(ex.ToString());
-            }
-        }
-        [HttpGet("agent/get/all")]
-        public List<AgentInfoDTO> GetAgents()
-        {
-            _logger.LogInformation("Agents controller getting info about all agents");
-
-            return new AgentInfoRepository<MyDbContext>(_dbContext).GetAll();
         }
 
         [HttpDelete("agent/delete/{id}")]

@@ -1,15 +1,17 @@
 ﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
+using System.Collections.Concurrent;
 using System.Data.Common;
 
 namespace MetricsEntetiesAndFunctions.Functions.Repository
 
 {
-    public class CPUMetricsRepository<T> : IRepository<CPUMetricsDTO> where T : DbContext
+    public class CPUMetricsRepository : IRepository<CPUMetricsDTO> 
     {
-        private readonly T _dbContext;
-        public CPUMetricsRepository(T dbContext)
+        private readonly MyDbContext _dbContext;
+        public CPUMetricsRepository(MyDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -38,12 +40,12 @@ namespace MetricsEntetiesAndFunctions.Functions.Repository
             return metrics;
         }
 
-        public CPUMetricsDTO GetByTimePeriod(DateTime from, DateTime to, int id)
+        public List<CPUMetricsDTO> GetByTimePeriod(DateTime from, DateTime to, int id)
         {
             var foundMetric = _dbContext.Set<CPUMetricsDTO>().Where(entity =>
             entity.agent_id == id &&
-            entity.to_time == to &&
-            entity.from_time == from).FirstOrDefault();
+            entity.time <= to &&
+            entity.time >= from).ToList();
 
             if (foundMetric == null)
                 throw new Exception("Metric haven't been found.");
@@ -54,13 +56,26 @@ namespace MetricsEntetiesAndFunctions.Functions.Repository
         public List<CPUMetricsDTO> GetByTimePeriod(DateTime from, DateTime to)
         {
             var foundMetrics = _dbContext.Set<CPUMetricsDTO>().Where(entity =>
-            entity.to_time == to &&
-            entity.from_time == from).ToList();
+            entity.time <= to &&
+            entity.time >= from).ToList();
 
             if (foundMetrics.Count == 0)
                 throw new Exception("Metrics haven't been found.");
 
             return foundMetrics;
+        }
+
+        public List<CPUMetricsDTO> GetByTimePeriod(DateTime from, DateTime to, List<CPUMetricsDTO> records)
+        {
+            List<CPUMetricsDTO> metrics = new List<CPUMetricsDTO>();
+
+            foreach (var record in records)
+            {
+                if (record.time >= from || record.time <= to)
+                    metrics.Add(record);
+            }
+
+            return metrics;
         }
     }
 }

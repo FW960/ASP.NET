@@ -22,7 +22,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                HDDMetricsRepository<MyDbContext> repo = new HDDMetricsRepository<MyDbContext>(_dbContext);
+                HDDMetricsRepository repo = new HDDMetricsRepository(_dbContext);
 
                 List<HDDMetricsDTO> metrics = repo.GetAllByAgent(id);
 
@@ -39,7 +39,7 @@ namespace MetricsManager.Controllers.MetricsControllers
         }
 
         [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
-        public override HDDMetricsDTO GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
+        public override List<HDDMetricsDTO> GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
         {
             _logger.LogInformation($"Manager getting HDD metrics from agent {id}. Time: from {fromTime} to {toTime}");
 
@@ -49,9 +49,9 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                HDDMetricsRepository<MyDbContext> repo = new HDDMetricsRepository<MyDbContext>(_dbContext);
+                HDDMetricsRepository repo = new HDDMetricsRepository(_dbContext);
 
-                HDDMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                List<HDDMetricsDTO> dto = repo.GetByTimePeriod(from, to, id);
 
                 _logger.LogInformation($"Manager succesfully got HDD metrics from agent {id}.");
 
@@ -75,7 +75,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                HDDMetricsRepository<MyDbContext> repo = new HDDMetricsRepository<MyDbContext>(_dbContext);
+                HDDMetricsRepository repo = new HDDMetricsRepository(_dbContext);
 
                 List<HDDMetricsDTO> metrics = repo.GetByTimePeriod(from, to);
 

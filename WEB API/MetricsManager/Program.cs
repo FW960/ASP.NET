@@ -32,6 +32,8 @@ try
 
     builder.Services.AddDbContext<MyDbContext>(options => options.UseMySql(connectionStrings.Default, ServerVersion.AutoDetect(connectionStrings.Default)));
 
+    builder.Services.AddHttpClient();
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.

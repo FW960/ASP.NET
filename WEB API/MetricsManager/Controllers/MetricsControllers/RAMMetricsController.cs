@@ -24,7 +24,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                RAMMetricsRepository<MyDbContext> repo = new RAMMetricsRepository<MyDbContext>(_dbContext);
+                RAMMetricsRepository repo = new RAMMetricsRepository(_dbContext);
 
                 List<RAMMetricsDTO> metrics = repo.GetAllByAgent(id);
 
@@ -41,7 +41,7 @@ namespace MetricsManager.Controllers.MetricsControllers
         }
 
         [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
-        public override RAMMetricsDTO GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
+        public override List<RAMMetricsDTO> GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
         {
             _logger.LogInformation($"Manager getting RAM metrics from agent {id}. Time: from {fromTime} to {toTime}");
 
@@ -51,9 +51,9 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                RAMMetricsRepository<MyDbContext> repo = new RAMMetricsRepository<MyDbContext>(_dbContext);
+                RAMMetricsRepository repo = new RAMMetricsRepository(_dbContext);
 
-                RAMMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                List<RAMMetricsDTO> dto = repo.GetByTimePeriod(from, to, id);
 
                 _logger.LogInformation($"Manager succesfully got RAM metrics from agent {id}.");
 
@@ -77,7 +77,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                RAMMetricsRepository<MyDbContext> repo = new RAMMetricsRepository<MyDbContext>(_dbContext);
+                RAMMetricsRepository repo = new RAMMetricsRepository(_dbContext);
 
                 List<RAMMetricsDTO> metrics = repo.GetByTimePeriod(from, to);
 

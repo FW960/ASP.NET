@@ -3,23 +3,25 @@ using MetricsEntetiesAndFunctions.Entities;
 using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using System.Collections.Concurrent;
 using System.Data.Common;
 
 namespace MetricsAgent.Controllers
 {
     [Route("metrics/network")]
     [ApiController]
-    public class NetworkMetricsController : BaseAgentController<NetworkMetricsDTO, MyDbContext> 
+    public class NetworkMetricsController : BaseAgentController<NetworkMetricsDTO, MyDbContext>
     {
-        public NetworkMetricsController(ILogger<NetworkMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
+        public NetworkMetricsController(ILogger<NetworkMetricsController> logger, MyDbContext dbContext, List<NetworkMetricsDTO> records, AgentInfo agentInfo) : base(logger, dbContext, records, agentInfo)
         {
             _logger.LogDebug(1, "Network Agent Metrics Controller.");
+            _records = records;
         }
 
-        [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
-        public override NetworkMetricsDTO GetMetrics([FromRoute] string fromTime, [FromRoute]string toTime, [FromRoute]int id)
+        [HttpGet("from/{fromTime}/to/{toTime}")]
+        public override List<NetworkMetricsDTO> GetMetrics([FromRoute] string fromTime, [FromRoute] string toTime)
         {
-            _logger.LogInformation($"Agent {id} getting Network metrics from {fromTime} to {toTime}");
+            _logger.LogInformation($"Agent {_agentInfo.id} getting Network metrics from {fromTime} to {toTime}");
 
             DateTime from = DateTime.Parse(fromTime);
 
@@ -27,15 +29,27 @@ namespace MetricsAgent.Controllers
 
             try
             {
-                NetworkMetricsRepository<MyDbContext> repo = new NetworkMetricsRepository<MyDbContext>(_dbContext);
+                NetworkMetricsRepository repo = new NetworkMetricsRepository(_dbContext);
 
-                NetworkMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                DateTime date = DateTime.Now - new TimeSpan(0,0,10,0); 
 
-                _logger.LogInformation($"Agent {id} succesfully got Network metrics");
+                if (from >= date && _records.Count != 0)
+                {
+                    List<NetworkMetricsDTO> dtos = repo.GetByTimePeriod(from, to, _records);
+
+                    _logger.LogInformation($"Agent {_agentInfo.id} succesfully got Network metrics.");
+
+                    return dtos;
+                }
+
+                List<NetworkMetricsDTO> dto = repo.GetByTimePeriod(from, to, _agentInfo.id);
+
+                _logger.LogInformation($"Agent {_agentInfo.id} succesfully got Network metrics");
 
                 return dto;
 
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
 
@@ -43,17 +57,21 @@ namespace MetricsAgent.Controllers
             }
         }
         [HttpPost("post")]
-        public override void PostMetrics(NetworkMetricsDTO dto)
+        public override void PostMetrics([FromBody] List<NetworkMetricsDTO> metrics)
         {
-            _logger.LogInformation($"Agent {dto.agent_id} posting Network metrics.");
+            _logger.LogInformation($"Agent {_agentInfo.id} posting Network metrics.");
 
             try
             {
-                NetworkMetricsRepository<MyDbContext> repo = new NetworkMetricsRepository<MyDbContext>(_dbContext);
+                NetworkMetricsRepository repo = new NetworkMetricsRepository(_dbContext);
 
-                repo.Create(dto);
+                int count = metrics.Count;
 
-                _logger.LogInformation($"Agent {dto.agent_id} succesfully posted Network metrics");
+                foreach (NetworkMetricsDTO metric in metrics)
+                    repo.Create(metric);
+
+
+                _logger.LogInformation($"Agent {_agentInfo.id} succesfully posted Network metrics");
 
             }
             catch (Exception ex)
