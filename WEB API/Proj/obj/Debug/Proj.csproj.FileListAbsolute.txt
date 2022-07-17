@@ -1,8 +1,0 @@
-C:\Users\windo\source\repos\ASP.NET\WEB API\Proj\bin\Debug\Proj.exe.config
-C:\Users\windo\source\repos\ASP.NET\WEB API\Proj\bin\Debug\Proj.exe
-C:\Users\windo\source\repos\ASP.NET\WEB API\Proj\bin\Debug\Proj.pdb
-C:\Users\windo\source\repos\ASP.NET\WEB API\Proj\obj\Debug\Proj.csproj.AssemblyReference.cache
-C:\Users\windo\source\repos\ASP.NET\WEB API\Proj\obj\Debug\Proj.csproj.SuggestedBindingRedirects.cache
-C:\Users\windo\source\repos\ASP.NET\WEB API\Proj\obj\Debug\Proj.csproj.CoreCompileInputs.cache
-C:\Users\windo\source\repos\ASP.NET\WEB API\Proj\obj\Debug\Proj.exe
-C:\Users\windo\source\repos\ASP.NET\WEB API\Proj\obj\Debug\Proj.pdb

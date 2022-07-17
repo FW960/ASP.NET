@@ -40,7 +40,12 @@
       "ProjectGuid": "d5e91fc3-7a3d-4736-89d3-1dd6b7efe10d",
       "DisplayName": "MetricsEntetiesAndFunctions",
       "ColorIndex": 6
+    },
+    "c9632e71-ab4a-4997-9454-f1848333cfd7": {
+      "ProjectGuid": "c9632e71-ab4a-4997-9454-f1848333cfd7",
+      "DisplayName": "Tests",
+      "ColorIndex": 7
     }
   },
-  "NextColorIndex": 7
+  "NextColorIndex": 8
 }

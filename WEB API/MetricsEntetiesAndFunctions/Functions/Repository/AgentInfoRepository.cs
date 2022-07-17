@@ -12,48 +12,30 @@ namespace MetricsEntetiesAndFunctions.Functions.Repository
         {
             _dbContext = dbContext;
         }
-        public AgentInfoDTO Create()
+        public AgentInfo Create(string pcName)
         {
-            var agent = new AgentInfoDTO();
+            var agent = new AgentInfo { pcName = pcName};
 
-            _dbContext.Set<AgentInfoDTO>().Add(agent);
+            _dbContext.Set<AgentInfo>().Add(agent);
 
             _dbContext.SaveChanges();
+
+            agent = _dbContext.Set<AgentInfo>().OrderBy(p => p).LastOrDefault();
 
             return agent;
 
         }
         public void Delete(int id)
         {
-            _dbContext.Set<AgentInfoDTO>().Remove(new AgentInfoDTO { id = id});
+            _dbContext.Set<AgentInfo>().Remove(new AgentInfo { id = id });
 
             _dbContext.SaveChanges();
 
         }
 
-        public void Enable(int id)
+        public List<AgentInfo> GetAll()
         {
-            _dbContext.Set<AgentInfoDTO>().Update(new AgentInfoDTO
-            {
-                id = id,
-                IsEnabled = true
-            });
-
-            _dbContext.SaveChanges();
-        }
-        public void Disable(int id)
-        {
-            _dbContext.Set<AgentInfoDTO>().Update(new AgentInfoDTO
-            {
-                id = id,
-                IsEnabled = false
-            });
-
-            _dbContext.SaveChanges();
-        }
-        public List<AgentInfoDTO> GetAll()
-        {
-            List<AgentInfoDTO> agents = _dbContext.Set<AgentInfoDTO>().Select(entity => entity).ToList();
+            List<AgentInfo> agents = _dbContext.Set<AgentInfo>().Select(entity => entity).ToList();
 
             return agents;
         }

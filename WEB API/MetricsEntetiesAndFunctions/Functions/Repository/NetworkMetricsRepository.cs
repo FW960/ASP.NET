@@ -1,14 +1,16 @@
 ﻿using DTOs;
+using MetricsEntetiesAndFunctions.Entities;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
+using System.Collections.Concurrent;
 using System.Data.Common;
 
 namespace MetricsEntetiesAndFunctions.Functions.Repository
 {
-    public class NetworkMetricsRepository<T> : IRepository<NetworkMetricsDTO> where T : DbContext
+    public class NetworkMetricsRepository : IRepository<NetworkMetricsDTO>
     {
-        private readonly T _dbContext;
-        public NetworkMetricsRepository(T dbContext)
+        private readonly MyDbContext _dbContext;
+        public NetworkMetricsRepository(MyDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -36,12 +38,12 @@ namespace MetricsEntetiesAndFunctions.Functions.Repository
             return metrics;
         }
 
-        public NetworkMetricsDTO GetByTimePeriod(DateTime from, DateTime to, int id)
+        public List<NetworkMetricsDTO> GetByTimePeriod(DateTime from, DateTime to, int id)
         {
             var foundMetric = _dbContext.Set<NetworkMetricsDTO>().Where(entity =>
             entity.agent_id == id &&
-            entity.to_time == to &&
-            entity.from_time == from).FirstOrDefault();
+            entity.time <= to &&
+            entity.time >= from).ToList();
 
             if (foundMetric == null)
                 throw new Exception("Metric haven't been found.");
@@ -52,13 +54,26 @@ namespace MetricsEntetiesAndFunctions.Functions.Repository
         public List<NetworkMetricsDTO> GetByTimePeriod(DateTime from, DateTime to)
         {
             var foundMetrics = _dbContext.Set<NetworkMetricsDTO>().Where(entity =>
-            entity.to_time == to &&
-            entity.from_time == from).ToList();
+            entity.time <= to &&
+            entity.time >= from).ToList();
 
             if (foundMetrics.Count == 0)
                 throw new Exception("Metrics haven't been found.");
 
             return foundMetrics;
+        }
+
+        public List<NetworkMetricsDTO> GetByTimePeriod(DateTime from, DateTime to, List<NetworkMetricsDTO> records)
+        {
+            List<NetworkMetricsDTO> metrics = new List<NetworkMetricsDTO>();
+
+            foreach (var record in records)
+            {
+                if (record.time >= from || record.time <= to)
+                    metrics.Add(record);
+            }
+
+            return metrics;
         }
     }
 }

@@ -3,6 +3,7 @@ using MetricsEntetiesAndFunctions.Entities;
 using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using System.Collections.Concurrent;
 using System.Data.Common;
 
 namespace MetricsAgent.Controllers
@@ -10,15 +11,16 @@ namespace MetricsAgent.Controllers
     [Route("metrics/clr")]
     public class CLRMetricsController : BaseAgentController<CLRMetricsDTO, MyDbContext>
     {
-        public CLRMetricsController(ILogger<CLRMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
+        public CLRMetricsController(ILogger<CLRMetricsController> logger, MyDbContext dbContext, List<CLRMetricsDTO> records, AgentInfo agentInfo) : base(logger, dbContext, records, agentInfo)
         {
             _logger.LogDebug(1, "CLR Agent Metrics Controller");
+            _records = records;
         }
 
-        [HttpGet("agent/{id}/errors-count/from/{fromTime}/to/{toTime}")]
-        public override CLRMetricsDTO GetMetrics([FromRoute] string fromTime, [FromRoute] string toTime, [FromRoute] int id)
+        [HttpGet("allocated_heap_size/from/{fromTime}/to/{toTime}")]
+        public override List<CLRMetricsDTO> GetMetrics([FromRoute] string fromTime, [FromRoute] string toTime)
         {
-            _logger.LogInformation($"Agent getting CLR metrics from {fromTime} to {toTime}");
+            _logger.LogInformation($"Agent {_agentInfo.id} getting CLR metrics from {fromTime} to {toTime}");
 
             DateTime from = DateTime.Parse(fromTime);
 
@@ -26,11 +28,23 @@ namespace MetricsAgent.Controllers
 
             try
             {
-                CLRMetricsRepository<MyDbContext> repo = new CLRMetricsRepository<MyDbContext>(_dbContext);
+                CLRMetricsRepository repo = new CLRMetricsRepository(_dbContext);
 
-                CLRMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                DateTime date = DateTime.Now - new TimeSpan(0, 0, 10, 0);
 
-                _logger.LogInformation($"Agent {id} succesfully got CLR metrics");
+
+                if (from >= date && _records.Count != 0)
+                {
+                    List<CLRMetricsDTO> dtos = repo.GetByTimePeriod(from, to, _records);
+
+                    _logger.LogInformation($"Agent {_agentInfo.id} succesfully got CLR metrics.");
+
+                    return dtos;
+                }
+
+                List<CLRMetricsDTO> dto = repo.GetByTimePeriod(from, to, _agentInfo.id);
+
+                _logger.LogInformation($"Agent {_agentInfo.id} succesfully got CLR metrics");
 
                 return dto;
             }
@@ -43,17 +57,20 @@ namespace MetricsAgent.Controllers
         }
 
         [HttpPost("post")]
-        public override void PostMetrics([FromBody]CLRMetricsDTO dto)
+        public override void PostMetrics([FromBody] List<CLRMetricsDTO> metrics)
         {
-            _logger.LogInformation($"Agent {dto.agent_id} posting CLR metrics.");
+            _logger.LogInformation($"Agent {_agentInfo.id} posting CLR metrics.");
 
             try
             {
-                CLRMetricsRepository<MyDbContext> repo = new CLRMetricsRepository<MyDbContext>(_dbContext);
+                CLRMetricsRepository repo = new CLRMetricsRepository(_dbContext);
 
-                repo.Create(dto);
+                int count = metrics.Count;
 
-                _logger.LogInformation($"Agent {dto.agent_id} succesfully posted CLR metrics");
+                foreach (CLRMetricsDTO metric in metrics)
+                    repo.Create(metric);
+
+                _logger.LogInformation($"Agent {_agentInfo.id} succesfully posted CLR metrics");
 
             }
             catch (Exception ex)

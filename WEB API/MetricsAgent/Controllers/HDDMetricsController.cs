@@ -3,38 +3,52 @@ using MetricsAgent.Repository;
 using MetricsEntetiesAndFunctions.Entities;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using System.Collections.Concurrent;
 using System.Data.Common;
 
 namespace MetricsAgent.Controllers
 {
     [Route("metrics/hdd")]
     [ApiController]
-    public class HDDMetricsController : BaseAgentController<HDDMetricsDTO, MyDbContext> 
+    public class HDDMetricsController : BaseAgentController<HDDMetricsDTO, MyDbContext>
     {
-        public HDDMetricsController(ILogger<HDDMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
+        public HDDMetricsController(ILogger<HDDMetricsController> logger, MyDbContext dbContext, List<HDDMetricsDTO> records, AgentInfo agentInfo) : base(logger, dbContext, records, agentInfo)
         {
             _logger.LogDebug(1, "HDD Agent Metrics Controller.");
+            _records = records;
         }
 
-        [HttpGet("agent/{id}/left/from/{fromTime}/to/{toTime}")]
-        public override HDDMetricsDTO GetMetrics([FromRoute] string fromTime, [FromRoute]string toTime, [FromRoute] int id)
+        [HttpGet("left/from/{fromTime}/to/{toTime}")]
+        public override List<HDDMetricsDTO> GetMetrics([FromRoute] string fromTime, [FromRoute] string toTime)
         {
-            _logger.LogInformation($"Agent getting HDD metrics from {fromTime} to {toTime}");
+            _logger.LogInformation($"Agent {_agentInfo.id} getting HDD metrics from {fromTime} to {toTime}");
 
             DateTime from = DateTime.Parse(fromTime);
-            
+
             DateTime to = DateTime.Parse(toTime);
 
             try
             {
-                HDDMetricsRepository<MyDbContext> repo = new HDDMetricsRepository<MyDbContext>(_dbContext);
+                HDDMetricsRepository repo = new HDDMetricsRepository(_dbContext);
 
-                HDDMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                DateTime date = DateTime.Now - new TimeSpan(0, 0, 10, 0);
 
-                _logger.LogInformation($"Agent {id} succesfully got HDD metrics");
+                if (from >= date && _records.Count != 0)
+                {
+                    List<HDDMetricsDTO> dtos = repo.GetByTimePeriod(from, to, _records);
+
+                    _logger.LogInformation($"Agent {_agentInfo.id} succesfully got HDD metrics.");
+
+                    return dtos;
+                }
+
+                List<HDDMetricsDTO> dto = repo.GetByTimePeriod(from, to, _agentInfo.id);
+
+                _logger.LogInformation($"Agent {_agentInfo.id} succesfully got HDD metrics");
 
                 return dto;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogInformation(ex.ToString());
 
@@ -42,17 +56,20 @@ namespace MetricsAgent.Controllers
             }
         }
         [HttpPost("post")]
-        public override void PostMetrics(HDDMetricsDTO dto)
+        public override void PostMetrics([FromBody] List<HDDMetricsDTO> metrics)
         {
-            _logger.LogInformation($"Agent {dto.agent_id} posting HDD metrics.");
+            _logger.LogInformation($"Agent {_agentInfo.id} posting HDD metrics.");
 
             try
             {
-                HDDMetricsRepository<MyDbContext> repo = new HDDMetricsRepository<MyDbContext>(_dbContext);
+                HDDMetricsRepository repo = new HDDMetricsRepository(_dbContext);
 
-                repo.Create(dto);
+                int count = metrics.Count;
 
-                _logger.LogInformation($"Agent {dto.agent_id} succesfully posted HDD metrics");
+                foreach (HDDMetricsDTO metric in metrics)
+                    repo.Create(metric);
+
+                _logger.LogInformation($"Agent {_agentInfo.id} succesfully posted HDD metrics");
 
             }
             catch (Exception ex)

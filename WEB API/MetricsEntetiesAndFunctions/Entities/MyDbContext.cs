@@ -15,7 +15,7 @@ namespace MetricsEntetiesAndFunctions.Entities
         DbSet<HDDMetricsDTO> hdd { get; set; }
         DbSet<NetworkMetricsDTO> network { get; set; }
         DbSet<RAMMetricsDTO> ram { get; set; }
-        DbSet<AgentInfoDTO> agent { get; set; }
+        DbSet<AgentInfo> agent { get; set; }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
 
@@ -27,15 +27,15 @@ namespace MetricsEntetiesAndFunctions.Entities
             model.Entity<RAMMetricsDTO>().ToTable("rammetrics");
             model.Entity<CPUMetricsDTO>().ToTable("cpumetrics");
             model.Entity<NetworkMetricsDTO>().ToTable("networkmetrics");
-            model.Entity<HDDMetricsDTO>().ToTable("hhdmetrics");
-            model.Entity<AgentInfoDTO>().ToTable("agentsinfo");
+            model.Entity<HDDMetricsDTO>().ToTable("hddmetrics");
+            model.Entity<AgentInfo>().ToTable("agentsinfo");
 
-            model.Entity<CLRMetricsDTO>().HasKey(entity => entity.agent_id).HasName("agent_id");
-            model.Entity<RAMMetricsDTO>().HasKey(entity => entity.agent_id).HasName("agent_id");
-            model.Entity<CPUMetricsDTO>().HasKey(entity => entity.agent_id).HasName("agent_id");
-            model.Entity<NetworkMetricsDTO>().HasKey(entity => entity.agent_id).HasName("agent_id");
-            model.Entity<HDDMetricsDTO>().HasKey(entity => entity.agent_id).HasName("agent_id");
-            model.Entity<AgentInfoDTO>().HasKey(entity => entity.id).HasName("id");
+            model.Entity<CLRMetricsDTO>().HasKey(entity => entity.key).HasName("key");
+            model.Entity<RAMMetricsDTO>().HasKey(entity => entity.key).HasName("key");
+            model.Entity<CPUMetricsDTO>().HasKey(entity => entity.key).HasName("key");
+            model.Entity<NetworkMetricsDTO>().HasKey(entity => entity.key).HasName("key");
+            model.Entity<HDDMetricsDTO>().HasKey(entity => entity.key).HasName("key");
+            model.Entity<AgentInfo>().HasKey(entity => entity.id).HasName("id");
         }
     }
 }

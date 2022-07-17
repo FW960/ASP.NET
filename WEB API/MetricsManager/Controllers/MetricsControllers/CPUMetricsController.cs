@@ -22,7 +22,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
+                CPUMetricsRepository repo = new CPUMetricsRepository(_dbContext);
 
                 List<CPUMetricsDTO> metrics = repo.GetAllByAgent(id);
 
@@ -39,7 +39,7 @@ namespace MetricsManager.Controllers.MetricsControllers
         }
 
         [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
-        public override CPUMetricsDTO GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
+        public override List<CPUMetricsDTO> GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime)
         {
             _logger.LogInformation($"Manager getting CPU metrics from agent {id}. Time: from {fromTime} to {toTime}");
 
@@ -49,9 +49,9 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
+                CPUMetricsRepository repo = new CPUMetricsRepository(_dbContext);
 
-                CPUMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                List<CPUMetricsDTO> dto = repo.GetByTimePeriod(from, to, id);
 
                 _logger.LogInformation($"Manager succesfully got CPU metrics from agent {id}.");
 
@@ -75,7 +75,7 @@ namespace MetricsManager.Controllers.MetricsControllers
 
             try
             {
-                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
+                CPUMetricsRepository repo = new CPUMetricsRepository(_dbContext);
 
                 List<CPUMetricsDTO> metrics = repo.GetByTimePeriod(from, to);
 

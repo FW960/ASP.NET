@@ -3,6 +3,7 @@ using MetricsEntetiesAndFunctions.Entities;
 using MetricsEntetiesAndFunctions.Functions.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using System.Collections.Concurrent;
 using System.Data.Common;
 
 namespace MetricsAgent.Controllers
@@ -12,15 +13,16 @@ namespace MetricsAgent.Controllers
     [ApiController]
     public class CPUMetricsController : BaseAgentController<CPUMetricsDTO, MyDbContext>
     {
-        public CPUMetricsController(ILogger<CPUMetricsController> logger, MyDbContext dbContext) : base(logger, dbContext)
+        public CPUMetricsController(ILogger<CPUMetricsController> logger, MyDbContext dbContext, List<CPUMetricsDTO> records, AgentInfo agentInfo) : base(logger, dbContext, records, agentInfo)
         {
             _logger.LogDebug(1, "CPU Agent Metrics Controller.");
+            _records = records;
         }
 
-        [HttpGet("agent/{id}/from/{fromTime}/to/{toTime}")]
-        public override CPUMetricsDTO GetMetrics([FromRoute] string fromTime, [FromRoute] string toTime, [FromRoute] int id)
+        [HttpGet("from/{fromTime}/to/{toTime}")]
+        public override List<CPUMetricsDTO> GetMetrics([FromRoute] string fromTime, [FromRoute] string toTime)
         {
-            _logger.LogInformation($"Agent getting CPU metrics from {fromTime} to {toTime}");
+            _logger.LogInformation($"Agent {_agentInfo.id} getting CPU metrics from {fromTime} to {toTime}");
 
             DateTime from = DateTime.Parse(fromTime);
 
@@ -28,11 +30,22 @@ namespace MetricsAgent.Controllers
 
             try
             {
-                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
+                CPUMetricsRepository repo = new CPUMetricsRepository(_dbContext);
 
-                CPUMetricsDTO dto = repo.GetByTimePeriod(from, to, id);
+                DateTime date = DateTime.Now - new TimeSpan(0, 0, 10, 0);
 
-                _logger.LogInformation($"Agent {id} succesfully got CPU metrics");
+                if (from >= date && _records.Count != 0)
+                {
+                    List<CPUMetricsDTO> dtos = repo.GetByTimePeriod(from, to, _records);
+
+                    _logger.LogInformation($"Agent {_agentInfo.id} succesfully got CPU metrics.");
+
+                    return dtos;
+                }
+
+                List<CPUMetricsDTO> dto = repo.GetByTimePeriod(from, to, _agentInfo.id);
+
+                _logger.LogInformation($"Agent {_agentInfo.id} succesfully got CPU metrics");
 
                 return dto;
             }
@@ -44,17 +57,20 @@ namespace MetricsAgent.Controllers
             }
         }
         [HttpPost("post")]
-        public override void PostMetrics(CPUMetricsDTO dto)
+        public override void PostMetrics([FromBody] List<CPUMetricsDTO> metrics)
         {
-            _logger.LogInformation($"Agent {dto.agent_id} posting CPU metrics.");
+            _logger.LogInformation($"Agent {_agentInfo.id} posting CPU metrics.");
 
             try
             {
-                CPUMetricsRepository<MyDbContext> repo = new CPUMetricsRepository<MyDbContext>(_dbContext);
+                CPUMetricsRepository repo = new CPUMetricsRepository(_dbContext);
 
-                repo.Create(dto);
+                int count = metrics.Count;
 
-                _logger.LogInformation($"Agent {dto.agent_id} succesfully posted CPU metrics");
+                foreach (CPUMetricsDTO metric in metrics)
+                    repo.Create(metric);
+
+                _logger.LogInformation($"Agent {_agentInfo.id} succesfully posted CPU metrics");
 
             }
             catch (Exception ex)

@@ -16,7 +16,7 @@ namespace MetricsManager
             _logger = logger;
             _dbContext = connector;
         }
-        public abstract T GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime);
+        public abstract List<T> GetMetricsFromAgent([FromRoute] int id, [FromRoute] string fromTime, [FromRoute] string toTime);
 
         public abstract List<T> GetMetricsFromAllCluster([FromRoute] string fromTime, [FromRoute] string toTime);
 

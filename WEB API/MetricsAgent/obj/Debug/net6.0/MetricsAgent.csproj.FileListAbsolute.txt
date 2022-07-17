@@ -48,3 +48,17 @@ C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\Pomelo
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.Design.dll
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\MetricsEntetiesAndFunctions.dll
 C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\MetricsEntetiesAndFunctions.pdb
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\Quartz.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\System.Windows.Extensions.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\windo\source\repos\ASP.NET\WEB API\MetricsAgent\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
