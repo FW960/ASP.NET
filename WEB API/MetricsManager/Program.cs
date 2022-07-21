@@ -6,6 +6,7 @@ using MySqlConnector;
 using MetricsManager.Controllers.MetricsControllers;
 using MetricsEntetiesAndFunctions.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 Logger logger = NLogBuilder.ConfigureNLog("nLog.config").GetCurrentClassLogger();
 logger.Debug("init main");
@@ -48,6 +49,14 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
+
+    app.UseFileServer(new FileServerOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "WebPage")),
+        RequestPath = "/WebPage",
+        EnableDefaultFiles = true
+    });
 
     app.Run();
 }

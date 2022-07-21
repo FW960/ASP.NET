@@ -1,0 +1,104 @@
+.wrapper {
+    
+    position: relative;
+    margin: 0 auto;
+    width: calc(100vw - 200px);
+    border: 1px solid #000;
+
+    #header {
+        padding-top: 31.5px;
+        border-bottom: 1px solid #000;
+        height: 100px;
+        box-sizing: border-box;
+
+        .heading {
+            width: fit-content;
+            margin: 0 auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    }
+
+    #content {
+        .metrics {
+            padding: 20px 20px 0;
+            height: fit-content;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+            .metricBox {
+                width: 300px;
+                height: fit-content;
+                border: 1px solid #000;
+                flex-basis: 49%;
+                margin-bottom: 20px;
+            }
+        }
+
+        .getMetricsForm {
+            border: 1px solid #000;
+            width: 300px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+
+            .FormText {
+                text-align: center;
+            }
+
+            .fromDate {
+                width: 100%;
+                margin-bottom: 10px;
+                
+            }
+
+            .toDate {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .agentId {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .buttons {
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 10px;
+
+                .submitButton {
+                    padding: 2px;
+                    cursor: pointer;
+                    border: 1px solid #000;
+                    text-align: center;
+                }
+
+                .resetButton {
+                    padding: 2px;
+                    width: 46px;
+                    cursor: pointer;
+                    border: 1px solid #000;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    #footer {
+        height: 100px;
+        border-top: 1px solid #000;
+        padding: 30px 10px 0;
+        box-sizing: border-box;
+
+        .license {
+            width: fit-content;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    }
+}

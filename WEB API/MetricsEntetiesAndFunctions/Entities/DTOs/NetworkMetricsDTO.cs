@@ -2,6 +2,6 @@
 {
     public class NetworkMetricsDTO : BaseDto 
     {
-        public double value { get; set; }
+        public int value { get; set; }
     }
 }

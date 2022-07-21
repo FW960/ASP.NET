@@ -1,0 +1,44 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header id="header">
+
+        </header>
+        <main id="content">
+            <div class="metrics">
+                <div class="metricBox"><canvas id="cpu"></canvas></div>
+                <div class="metricBox"><canvas id="clr"></canvas></div>
+                <div class="metricBox"><canvas id="network"></canvas></div>
+                <div class="metricBox"><canvas id="hdd"></canvas></div>
+                <div class="metricBox"><canvas id="ram"></canvas></div>
+            </div>
+
+            <div class="getMetricsForm">
+                <p class="FormText" style="font-size: 16px;">Type in 'from' date, 'to' date and agent id to get metrics.</p>
+                <input class="fromDate" type="datetime">
+                <input class="toDate" type="datetime">
+                <input class="agentId" type="text">
+                <div class="buttons"><div class="submitButton" type="submit">Submit</div>
+                    <div class="resetButton" type="reset">Reset</div>
+                </div>
+
+            </form>
+        </main>
+        <footer id="footer">
+
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="program.js"></script>
+</body>
+
+</html>

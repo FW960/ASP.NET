@@ -88,7 +88,7 @@ namespace MetricsEntetiesAndFunctions.Functions.Quartz
             NetworkMetricsDTO network = new NetworkMetricsDTO
             {
                 agent_id = _agentInfo.id,
-                value = speed,
+                value = (int)speed,
                 time = DateTime.Now
             };
 

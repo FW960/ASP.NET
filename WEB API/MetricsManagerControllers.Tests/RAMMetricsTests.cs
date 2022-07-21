@@ -5,7 +5,7 @@ using MetricsManager.Controllers.MetricsControllers;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using MetricsAgent.Repository;
-using MetricsAgent.DTOs;
+using MetricsEntetiesAndFunctions.Entities;
 using Microsoft.Extensions.Logging;
 using MySqlConnector;
 using System.Data.SQLite;
