@@ -12,6 +12,7 @@ using MetricsEntetiesAndFunctions.Functions.Quartz;
 using System.Text;
 using DTOs;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.FileProviders;
 
 Logger logger = NLogBuilder.ConfigureNLog("nLog.config").GetCurrentClassLogger();
 logger.Debug("init.main");
@@ -71,6 +72,8 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+
+    
 
     app.UseHttpsRedirection();
 

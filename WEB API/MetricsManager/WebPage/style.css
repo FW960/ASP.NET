@@ -1,0 +1,127 @@
+.wrapper {
+  position: relative;
+  margin: 0 auto;
+  width: calc(100vw - 200px);
+  border: 1px solid #000;
+}
+
+.wrapper #header {
+  padding-top: 31.5px;
+  border-bottom: 1px solid #000;
+  height: 100px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.wrapper #header .heading {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.wrapper #content .metrics {
+  padding: 20px 20px 0;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.wrapper #content .metrics .metricBox {
+  width: 300px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border: 1px solid #000;
+  -ms-flex-preferred-size: 49%;
+      flex-basis: 49%;
+  margin-bottom: 20px;
+}
+
+.wrapper #content .getMetricsForm {
+  border: 1px solid #000;
+  width: 300px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0 auto;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.wrapper #content .getMetricsForm .FormText {
+  text-align: center;
+}
+
+.wrapper #content .getMetricsForm .fromDate {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.wrapper #content .getMetricsForm .toDate {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.wrapper #content .getMetricsForm .agentId {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.wrapper #content .getMetricsForm .buttons {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.wrapper #content .getMetricsForm .buttons .submitButton {
+  padding: 2px;
+  cursor: pointer;
+  border: 1px solid #000;
+  text-align: center;
+}
+
+.wrapper #content .getMetricsForm .buttons .resetButton {
+  padding: 2px;
+  width: 46px;
+  cursor: pointer;
+  border: 1px solid #000;
+  text-align: center;
+}
+
+.wrapper #footer {
+  height: 100px;
+  border-top: 1px solid #000;
+  padding: 30px 10px 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.wrapper #footer .license {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-family: 'Courier New', Courier, monospace;
+}
+/*# sourceMappingURL=style.css.map */
